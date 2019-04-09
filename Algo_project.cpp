@@ -2,12 +2,13 @@
 # include<bits/stdc++.h>
 # include<string.h>
 # include<string>
+# include<fstream>
 using namespace std;
 void clrscr()
 {
    system("cls");
 }
-class Registration
+class Customer
 {
     public:
     int client_no;
@@ -15,23 +16,41 @@ class Registration
     string Lname;
     string date;
     string address;
-    int mob_no;
+    string mob_no;
     float cost;
-
+    fstream fio;
     void Reg()
     {
-        cin>>client_no>>Fname>>Lname>>date>>address>>mob_no>>cost;
+        fio.open("customer.txt",ios::app|ios::in);
+        cin>>client_no>>Fname>>Lname>>date>>address>>mob_no;
+        fio<<client_no<<"   "<<Fname<<"     "<<Lname<<"     "<<date<<"      "<<address<<"     "<<mob_no<<endl;
+        fio.close();
+    }
+    void display()
+    {
         clrscr();
+        char ch;
+        fio.open("customer.txt",ios::app|ios::in);
+        ch=fio.get();
+        while(!fio.eof())
+        {
+        cout<<ch;
+        ch=fio.get();
+        }
+        fio.close();
+
     }
 };
 int main()
 {
-    Registration r;
-    cout<<"Client_no.     Fname       Lname       date                  address                 mob_no          cost"<<endl;
-    cout<<"-------------------------------------------------------------------------------------------------------------------"<<endl;
-    r.Reg();
-    while(true)
+    Customer r;
+     cout<<"Client_no.      Fname       Lname       date        address         mob_no          "<<endl;
+    cout<<"-----------------------------------------------------------------------------------------------------------"<<endl;
+    int y=0;
+    do
     {
         r.Reg();
-    }
+        y++;
+    }while(y!=3);
+    r.display();
 }
